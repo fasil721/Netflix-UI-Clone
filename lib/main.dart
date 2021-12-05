@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:netfix/api/api.dart';
 import 'package:netfix/pages/home_page.dart';
 
-void main() {
+void main() async {
+  final List datas = await Api.trendingMovies();
   runApp(
-    const MaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyApp(),
+      home: MyApp(data: datas),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.data}) : super(key: key);
+  final List data;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -19,15 +22,16 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
-  final screens = [
-    const HomePage(),
-    Container(),
-    Container(),
-    Container(),
-    Container(),
-  ];
+
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      HomePage(datas: widget.data),
+      Container(),
+      Container(),
+      Container(),
+      Container(),
+    ];
     return Scaffold(
       backgroundColor: Colors.black,
       body: IndexedStack(
@@ -49,34 +53,40 @@ class _MyAppState extends State<MyApp> {
             currentIndex = index;
           },
         ),
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_filled,
+            icon: ImageIcon(
+              currentIndex == 0
+                  ? const AssetImage("assets/icons/home2.png")
+                  : const AssetImage("assets/icons/home1.png"),
+              size: 25,
             ),
             label: "Home",
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(
+          //     Icons.gamepad_sharp,
+          //   ),
+          //   label: "Games",
+          // ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.gamepad_sharp,
-            ),
-            label: "Games",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.video_library,
+            icon: ImageIcon(
+              currentIndex == 1
+                  ? const AssetImage("assets/icons/video2.png")
+                  : const AssetImage("assets/icons/video1.png"),
+              size: 25,
             ),
             label: "Coming soon",
           ),
-          BottomNavigationBarItem(
+          // BottomNavigationBarItem(
+          //   icon: Icon(
+          //     Icons.sentiment_very_satisfied,
+          //   ),
+          //   label: "fast Laughs",
+          // ),
+          const BottomNavigationBarItem(
             icon: Icon(
-              Icons.sentiment_very_satisfied,
-            ),
-            label: "fast Laughs",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.file_download,
+              Icons.offline_bolt_rounded,
             ),
             label: "downloads",
           ),
