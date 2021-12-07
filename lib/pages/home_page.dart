@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/design/colors.dart';
 import 'package:netfix/widget/home_listview.dart';
 import 'package:netfix/widget/home_stack_listview.dart';
-import 'package:netfix/widget/main_poster.dart';
+import 'package:netfix/widget/head_poster.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key, required this.datas}) : super(key: key);

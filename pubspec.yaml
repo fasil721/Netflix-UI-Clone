@@ -37,6 +37,7 @@ dependencies:
   google_fonts: ^2.1.0
   http: ^0.13.4
   font_awesome_flutter: ^9.2.0
+  bordered_text: ^2.0.0
 
 dev_dependencies:
   flutter_test:

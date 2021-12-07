@@ -33,7 +33,7 @@ class MainPoster extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * .65,
           child: Image.network(
-            imageUrl + datas[15]["poster_path"],
+            imageUrl + datas[5]["poster_path"],
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) =>
                 Container(color: white),
@@ -47,15 +47,17 @@ class MainPoster extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.black.withOpacity(0.05),
-                  Colors.black.withOpacity(0.05),
-                  Colors.black.withOpacity(0.05),
-                  Colors.black.withOpacity(0.05),
-                  Colors.black.withOpacity(0.05),
-                  Colors.black.withOpacity(0.05),
-                  Colors.black.withOpacity(0.8),
-                  Colors.black.withOpacity(0.8),
-                  Colors.black.withOpacity(1),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.05),
+                  black.withOpacity(0.5),
+                  black.withOpacity(0.75),
+                  black.withOpacity(0.9),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,

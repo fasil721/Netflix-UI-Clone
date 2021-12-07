@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/api/api.dart';
 import 'package:netfix/design/colors.dart';
+import 'package:bordered_text/bordered_text.dart';
 
 class StackListView extends StatefulWidget {
   const StackListView({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class StackListView extends StatefulWidget {
 }
 
 class _StackListViewState extends State<StackListView> {
-  Future<dynamic>? datas;
+  Future<List>? datas;
   @override
   void initState() {
     datas = Api.topRatedMovies();
@@ -20,9 +22,8 @@ class _StackListViewState extends State<StackListView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       height: 150,
-      width: 100,
       child: FutureBuilder(
         future: datas,
         builder: (context, AsyncSnapshot snapshot) {
@@ -31,21 +32,43 @@ class _StackListViewState extends State<StackListView> {
             return ListView.separated(
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
-              itemCount: movies.length,
+              itemCount: 10,
               itemBuilder: (context, index) {
-                return Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.network(
-                        imageUrl + movies[index]["poster_path"],
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          color: white,
+                return SizedBox(
+                  width: 130,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        right: 0,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Image.network(
+                            imageUrl + movies[index]["poster_path"],
+                            width: 100,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(color: white),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Positioned(
+                        left: 0,
+                        bottom: 0,
+                        child: BorderedText(
+                          strokeWidth: 4,
+                          strokeColor: white,
+                          child: Text(
+                            (index + 1).toString(),
+                            style: GoogleFonts.roboto(
+                              fontSize: 75,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
               separatorBuilder: (BuildContext context, int index) =>
