@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/api/api.dart';
+import 'package:netfix/api/functions.dart';
 import 'package:netfix/design/colors.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MainPoster extends StatelessWidget {
-  const MainPoster({Key? key, required this.datas}) : super(key: key);
-  final List datas;
+class MainPoster extends StatefulWidget {
+  const MainPoster({Key? key}) : super(key: key);
 
-  Widget dotIcon() => const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 2),
-        child: Icon(
-          FontAwesomeIcons.ggCircle,
-          color: blue,
-          size: 4,
-        ),
-      );
+  @override
+  State<MainPoster> createState() => _MainPosterState();
+}
 
-  Widget textGenre(String txt) => Text(
-        txt,
-        style: GoogleFonts.poppins(
-          color: white,
-          fontSize: 12,
-        ),
-      );
+class _MainPosterState extends State<MainPoster> {
+  Future<List>? movies;
+  @override
+  void initState() {
+    movies = Api.trendingMovies();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * .65,
-          child: Image.network(
-            imageUrl + datas[5]["poster_path"],
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) =>
-                Container(color: white),
-          ),
-        ),
+        FutureBuilder(
+            future: movies,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                List datas = snapshot.data as List;
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * .65,
+                  child: Image.network(
+                    imageUrl + datas[15]["poster_path"],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Container(color: white),
+                  ),
+                );
+              }
+              return Container();
+            }),
         Positioned(
           bottom: 0,
           child: Container(

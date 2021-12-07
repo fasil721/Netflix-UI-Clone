@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:netfix/api/api.dart';
+import 'package:netfix/pages/coming_soon_page.dart';
 import 'package:netfix/pages/home_page.dart';
-import 'package:netfix/pages/video_page.dart';
 
 void main() async {
-  final List datas = await Api.trendingMovies();
-  final List genres = await Api.genre();
   runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyApp(
-        data: datas,
-        genres: genres,
-      ),
+      home: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key, required this.data, required this.genres})
-      : super(key: key);
-  final List data;
-  final List genres;
+  const MyApp({
+    Key? key,
+  }) : super(key: key);
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -32,8 +25,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomePage(datas: widget.data),
-      ComingSoonPage(genres: widget.genres),
+       HomePage(),
+      const ComingSoonPage(),
       Container(),
       Container(),
       Container(),
