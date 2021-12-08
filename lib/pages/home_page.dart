@@ -36,15 +36,17 @@ class _HomePageState extends State<HomePage> {
               appBar: AppBar(
                 toolbarOpacity: 0,
                 elevation: 0,
-                backgroundColor:
-                    Colors.black.withOpacity(notifier.value < 100 ? 0.2 : 1),
+                backgroundColor: Colors.black.withOpacity(
+                    notifier.value < 100 ? (1.00 - offset) * 0.8 : 0.8),
                 bottom: PreferredSize(
-                  preferredSize: Size(0, notifier.value > 100 ? -14 : 42),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: notifier.value < 100 ? 40 * offset : 0,
-                        child: ListTile(
+                  preferredSize: notifier.value < 100
+                      ? Size(0, 42 * offset)
+                      : const Size(0, -18),
+                  child: SizedBox(
+                    height: notifier.value < 100 ? (60 * offset) + 38 : 38,
+                    child: Stack(
+                      children: [
+                        ListTile(
                           leading: Image.asset(
                             "assets/icons/netflix.png",
                             height: notifier.value < 100 ? 40 * offset : 0,
@@ -67,53 +69,55 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "TV Shows",
-                              style: GoogleFonts.poppins(
-                                color: white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            height: 38,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  "TV Shows",
+                                  style: GoogleFonts.poppins(
+                                    color: white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  "Movies",
+                                  style: GoogleFonts.poppins(
+                                    color: white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  "Categories",
+                                  style: GoogleFonts.poppins(
+                                    color: white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "Movies",
-                              style: GoogleFonts.poppins(
-                                color: white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              "Categories",
-                              style: GoogleFonts.poppins(
-                                color: white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
               body: NotificationListener(
                 onNotification: (notify) {
                   if (notify is ScrollEndNotification) {
-                    notifier.value = scroll.position.pixels;
+                    notifier.value = scroll.offset;
                     if (scroll.position.pixels < 100) {
                       offset = (100 - notify.metrics.pixels) / 100;
-                      print(offset);
                     }
                   }
-
+                  print((60 * offset) + 38);
                   return false;
                 },
                 child: ListView(

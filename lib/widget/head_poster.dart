@@ -58,7 +58,7 @@ class _MainPosterState extends State<MainPoster> {
                   black.withOpacity(0.05),
                   black.withOpacity(0.05),
                   black.withOpacity(0.5),
-                  black.withOpacity(0.75),
+                  black.withOpacity(0.8),
                   black.withOpacity(0.9),
                 ],
                 begin: Alignment.topCenter,
