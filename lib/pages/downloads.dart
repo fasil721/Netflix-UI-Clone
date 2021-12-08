@@ -117,7 +117,8 @@ class _DownloadsState extends State<Downloads> {
                           Image.network(
                             "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
                             width: 25,
-                            height: 25,
+                            height: 25,  errorBuilder: (context, error, stackTrace) =>
+                                      Container(),
                           ),
                         ],
                       ),

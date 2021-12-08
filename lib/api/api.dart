@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
+
 const imageUrl = "https://image.tmdb.org/t/p/w500";
 const topRatedUrl =
     "https://api.themoviedb.org/3/movie/top_rated?api_key=cef190df496ba948f6fb61fa17f0cc62";

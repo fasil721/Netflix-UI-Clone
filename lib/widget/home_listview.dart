@@ -52,8 +52,7 @@ class _PopularListviewState extends State<HomeListview> {
                     child: Image.network(
                       imageUrl + datas[index]["poster_path"],
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(                     
-                      ),
+                      errorBuilder: (context, error, stackTrace) => Container(),
                     ),
                   ),
                 );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/api/functions.dart';
 import 'package:netfix/design/colors.dart';
+import 'package:netfix/widget/catagories.dart';
 import 'package:netfix/widget/home_listview.dart';
 import 'package:netfix/widget/home_stack_listview.dart';
 import 'package:netfix/widget/head_poster.dart';
@@ -62,6 +63,8 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(2),
                               child: Image.network(
                                 "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(),
                                 height: notifier.value < 100 ? 27 * offset : 0,
                               ),
                             ),
@@ -91,13 +94,30 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              Text(
-                                "Categories",
-                                style: GoogleFonts.poppins(
-                                  color: white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Categories",
+                                    style: GoogleFonts.poppins(
+                                      color: white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            const Catogories(),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: white,
+                                    ),
+                                  )
+                                ],
                               ),
                             ],
                           ),

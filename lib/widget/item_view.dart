@@ -36,8 +36,7 @@ class ItemView extends StatelessWidget {
               "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
               width: 25,
               height: 25,
-              errorBuilder: (context, error, stackTrace) =>
-                  Container(),
+              errorBuilder: (context, error, stackTrace) => Container(),
             ),
             const SizedBox(width: 15),
           ],
@@ -52,6 +51,7 @@ class ItemView extends StatelessWidget {
                     imageUrl + movie["backdrop_path"],
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Container(),
                   ),
                   Align(
                     alignment: const Alignment(0, 0),
