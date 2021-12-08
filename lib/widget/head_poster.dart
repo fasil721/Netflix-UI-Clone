@@ -24,23 +24,23 @@ class _MainPosterState extends State<MainPoster> {
     return Stack(
       children: [
         FutureBuilder(
-            future: movies,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                List datas = snapshot.data as List;
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * .65,
-                  child: Image.network(
-                    imageUrl + datas[15]["poster_path"],
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        Container(color: white),
-                  ),
-                );
-              }
-              return Container();
-            }),
+          future: movies,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              List datas = snapshot.data as List;
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * .65,
+                child: Image.network(
+                  imageUrl + datas[15]["poster_path"],
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(),
+                ),
+              );
+            }
+            return Container();
+          },
+        ),
         Positioned(
           bottom: 0,
           child: Container(
@@ -57,7 +57,7 @@ class _MainPosterState extends State<MainPoster> {
                   black.withOpacity(0.05),
                   black.withOpacity(0.05),
                   black.withOpacity(0.05),
-                  black.withOpacity(0.5),
+                  black.withOpacity(0.3),
                   black.withOpacity(0.8),
                   black.withOpacity(0.9),
                 ],

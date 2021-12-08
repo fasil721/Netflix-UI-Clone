@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netfix/api/api.dart';
 
-import 'package:netfix/design/colors.dart';
-
 import 'item_view.dart';
 
 class HomeListview extends StatefulWidget {
@@ -25,8 +23,8 @@ class _PopularListviewState extends State<HomeListview> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
-      height: 150,
-      width: 100,
+      height: 160,
+      width: 120,
       child: FutureBuilder(
         future: movies,
         builder: (context, AsyncSnapshot snapshot) {
@@ -54,8 +52,7 @@ class _PopularListviewState extends State<HomeListview> {
                     child: Image.network(
                       imageUrl + datas[index]["poster_path"],
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: white,
+                      errorBuilder: (context, error, stackTrace) => Container(                     
                       ),
                     ),
                   ),

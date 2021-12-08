@@ -23,72 +23,88 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: black,
-      body: ListView(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        controller: scroll,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          AppBar(
-            backgroundColor: black,
-            toolbarHeight: 60,
-            elevation: 0,
-            title: Text(
-              "Coming Soon",
-              style: GoogleFonts.roboto(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: black,
+        body: NestedScrollView(
+          scrollDirection: Axis.vertical,
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              snap: false,
+              pinned: false,
+              floating: true,
+              expandedHeight: 120,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Column(
+                  children: [
+                    SizedBox(
+                      height: 60,
+                      child: ListTile(
+                        tileColor: black,
+                        title: Text(
+                          "Coming Soon",
+                          style: GoogleFonts.roboto(
+                            fontSize: 20,
+                            color: white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        trailing: Wrap(
+                          children: [
+                            const ImageIcon(
+                              AssetImage("assets/icons/search.png"),
+                              color: white,
+                            ),
+                            const SizedBox(width: 15),
+                            Image.network(
+                              "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
+                              width: 25,
+                              height: 25,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 60,
+                      child: ListTile(
+                        tileColor: black,
+                        minLeadingWidth: 20,
+                        leading: const Icon(
+                          Icons.notifications_none_sharp,
+                          color: white,
+                        ),
+                        title: Text(
+                          "Notifications",
+                          style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: white,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: white,
+                          size: 15,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            actions: [
-              const ImageIcon(
-                AssetImage("assets/icons/search.png"),
-                color: white,
-              ),
-              const SizedBox(width: 15),
-              Image.network(
-                "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
-                width: 25,
-                height: 25,
-              ),
-              const SizedBox(width: 15),
-            ],
-          ),
-          ListTile(
-            minLeadingWidth: 20,
-            leading: const Icon(
-              Icons.notifications_none_sharp,
-              color: white,
-            ),
-            title: Text(
-              "Notifications",
-              style: GoogleFonts.roboto(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: white,
-              ),
-            ),
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: white,
-              size: 15,
-            ),
-          ),
-          SizedBox(
+            )
+          ],
+          body: SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 240,
+            height: MediaQuery.of(context).size.height,
             child: FutureBuilder(
               future: movies,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   List datas = snapshot.data as List;
                   return ListView.builder(
-                    controller: scroll,
                     itemCount: datas.length,
                     itemBuilder: (context, index) {
                       String date;
@@ -104,6 +120,8 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                                   imageUrl + datas[index]["backdrop_path"],
                                   width: MediaQuery.of(context).size.width,
                                   fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(),
                                 ),
                                 Align(
                                   alignment: const Alignment(0, 0),
@@ -126,60 +144,6 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                               ],
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 100,
-                          //   child: Row(
-                          //     children: [
-                          //       Expanded(
-                          //         flex: 6,
-                          //         child: Text(
-                          //           datas[index]["title"],
-                          //           style: GoogleFonts.roboto(
-                          //             fontSize: 20,
-                          //             color: white,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       const Expanded(
-                          //         child: Icon(
-                          //           Icons.notifications_none,
-                          //           color: white,
-                          //         ),
-                          //       ),
-                          //       const Expanded(
-                          //         child: Icon(
-                          //           Icons.notifications_none,
-                          //           color: white,
-                          //         ),
-                          //       ),
-                          //       const SizedBox(),
-                          //     ],
-                          //   ),
-                          // ),
-                          // ListTile(
-                          // title: Text(
-                          //   datas[index]["title"],
-                          //   style: GoogleFonts.roboto(
-                          //     fontSize: 15,
-                          //     color: white,
-                          //   ),
-                          // ),
-                          //   trailing: Wrap(
-                          //     children: const [
-                          //       Icon(
-                          //         Icons.notifications_none,
-                          //         color: white,
-                          //       ),
-                          //       SizedBox(
-                          //         width: 10,
-                          //       ),
-                          //       Icon(
-                          //         Icons.info_outline,
-                          //         color: white,
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(
@@ -271,8 +235,8 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                 return const SizedBox();
               },
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

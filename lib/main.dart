@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netfix/pages/coming_soon_page.dart';
+import 'package:netfix/pages/downloads.dart';
 import 'package:netfix/pages/home_page.dart';
 
 void main() async {
@@ -25,11 +26,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-       HomePage(),
+      const HomePage(),
       const ComingSoonPage(),
-      Container(),
-      Container(),
-      Container(),
+      const Downloads(),
     ];
     return Scaffold(
       backgroundColor: Colors.black,
@@ -85,9 +84,9 @@ class _MyAppState extends State<MyApp> {
           // ),
           const BottomNavigationBarItem(
             icon: Icon(
-              Icons.offline_bolt_rounded,
+              Icons.file_download_outlined,
             ),
-            label: "downloads",
+            label: "Downloads",
           ),
         ],
       ),
