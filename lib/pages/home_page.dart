@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/api/functions.dart';
 import 'package:netfix/design/colors.dart';
@@ -17,6 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final scroll = ScrollController();
   double offset = 1;
+  double yOffset = 0;
+  bool reverse = false;
   final ValueNotifier<double> notifier = ValueNotifier(0);
 
   @override
@@ -32,6 +35,7 @@ class _HomePageState extends State<HomePage> {
         valueListenable: notifier,
         builder: (context, value, _) {
           return Scaffold(
+            resizeToAvoidBottomInset: true,
             extendBodyBehindAppBar: true,
             backgroundColor: black,
             appBar: AppBar(
@@ -42,33 +46,40 @@ class _HomePageState extends State<HomePage> {
               bottom: PreferredSize(
                 preferredSize: notifier.value < 100
                     ? Size(0, 42 * offset)
-                    : const Size(0, -18),
+                    : const Size(0, 0),
                 child: SizedBox(
                   height: notifier.value < 100 ? (60 * offset) + 38 : 38,
                   child: Stack(
                     children: [
-                      ListTile(
-                        leading: Image.asset(
-                          "assets/icons/netflix.png",
-                          height: notifier.value < 100 ? 40 * offset : 0,
-                        ),
-                        trailing: Wrap(
-                          children: [
-                            Image.asset(
-                              "assets/icons/search.png",
-                              height: notifier.value < 100 ? 30 * offset : 0,
+                      ClipRRect(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 0),
+                          transform: Matrix4.translationValues(0, yOffset, 0),
+                          child: ListTile(
+                            leading: Image.asset(
+                              "assets/icons/netflix.png",
+                              height: 40,
                             ),
-                            const SizedBox(width: 15),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(2),
-                              child: Image.network(
-                                "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Container(),
-                                height: notifier.value < 100 ? 27 * offset : 0,
-                              ),
+                            trailing: Wrap(
+                              children: [
+                                Image.asset(
+                                  "assets/icons/search.png",
+                                  height: 30,
+                                ),
+                                const SizedBox(width: 15),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(2),
+                                  child: Image.network(
+                                    "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(),
+                                    height: 27,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                       Align(
@@ -78,6 +89,9 @@ class _HomePageState extends State<HomePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
                               Text(
                                 "TV Shows",
                                 style: GoogleFonts.poppins(
@@ -129,13 +143,23 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             body: NotificationListener(
-              onNotification: (notify) {
-                if (notify is ScrollEndNotification) {
-                  notifier.value = scroll.offset;
-                  if (scroll.position.pixels < 100) {
-                    offset = (100 - notify.metrics.pixels) / 100;
-                  }
+              onNotification: (noti) {
+                notifier.value = scroll.position.pixels;
+                if (scroll.position.pixels < 100) {
+                  offset = (100 - scroll.position.pixels) / 100;
+                  yOffset = -notifier.value * .7;
                 }
+                if (scroll.position.userScrollDirection ==
+                    ScrollDirection.forward) {
+                  reverse = true;
+                  print("reverse");
+                }
+                if (scroll.position.userScrollDirection ==
+                    ScrollDirection.reverse) {
+                  reverse = false;
+                  print("forward");
+                }
+
                 return false;
               },
               child: ListView(
