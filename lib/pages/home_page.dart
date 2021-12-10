@@ -149,16 +149,16 @@ class _HomePageState extends State<HomePage> {
                   offset = (100 - scroll.position.pixels) / 100;
                   yOffset = -notifier.value * .7;
                 }
-                if (scroll.position.userScrollDirection ==
-                    ScrollDirection.forward) {
-                  reverse = true;
-                  print("reverse");
-                }
-                if (scroll.position.userScrollDirection ==
-                    ScrollDirection.reverse) {
-                  reverse = false;
-                  print("forward");
-                }
+                // if (scroll.position.userScrollDirection ==
+                //     ScrollDirection.forward) {
+                //   reverse = true;
+                //   // print("reverse");
+                // }
+                // if (scroll.position.userScrollDirection ==
+                //     ScrollDirection.reverse) {
+                //   reverse = false;
+                //   // print("forward");
+                // }
 
                 return false;
               },

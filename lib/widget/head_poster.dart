@@ -32,7 +32,7 @@ class _MainPosterState extends State<MainPoster> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * .65,
                 child: Image.network(
-                  imageUrl + datas[15]["poster_path"],
+                  imageUrl + datas[9]["poster_path"],
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(),
                 ),

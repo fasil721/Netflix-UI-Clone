@@ -29,53 +29,72 @@ class _StackListViewState extends State<StackListView> {
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             List movies = snapshot.data as List;
-            return ListView.separated(
+            return ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 0),
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemCount: 10,
               itemBuilder: (context, index) {
                 return Stack(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   children: [
                     Container(
                       color: black,
-                      width: index == 9 ? 165 : 135,
+                      width: index == 9 ? 185 : 140,
                       height: 120,
                     ),
                     Positioned(
                       right: -10,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Image.network(
-                          imageUrl + movies[index]["poster_path"],
-                          width: 120,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(),
+                      bottom: 0,
+                      child: SizedBox(
+                        height: 160,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Image.network(
+                            imageUrl + movies[index]["poster_path"],
+                            width: 120,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(),
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
-                      left: 0,
-                      bottom: -15,
+                      left: index == 0 ? 0 : -6,
+                      bottom: -20,
                       child: BorderedText(
-                        strokeWidth: 2.5,
+                        strokeWidth: 2,
                         strokeColor: white,
                         child: Text(
                           (index + 1).toString(),
                           style: GoogleFonts.roboto(
-                            fontSize: 75,
+                            fontSize: 90,
                             fontWeight: FontWeight.w800,
                             color: Colors.black87,
                           ),
                         ),
                       ),
                     ),
+                    index != 0
+                        ? Container(
+                            width: 25,
+                            height: 160,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerRight,
+                                end: Alignment.centerLeft,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black,
+                                ],
+                              ),
+                            ),
+                          )
+                        : Container()
                   ],
                 );
               },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(width: 10),
             );
           }
           return const SizedBox();
