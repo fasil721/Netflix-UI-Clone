@@ -9,7 +9,7 @@ class Catogories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: black.withOpacity(0.5),
+      color: black.withOpacity(0.7),
       child: Stack(
         children: [
           Align(
