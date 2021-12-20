@@ -33,6 +33,7 @@ class _StackListViewState extends State<StackListView> {
               padding: const EdgeInsets.symmetric(horizontal: 0),
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
+              
               itemCount: 10,
               itemBuilder: (context, index) {
                 return Stack(

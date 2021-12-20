@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:netfix/pages/coming_soon_page.dart';
 import 'package:netfix/pages/downloads.dart';
 import 'package:netfix/pages/home_page.dart';
 
 void main() async {
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
