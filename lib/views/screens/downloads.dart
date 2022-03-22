@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/design/colors.dart';
-import 'package:netfix/services/api_services.dart';
+import 'package:netfix/models/movie_models.dart';
 
 class Downloads extends StatefulWidget {
   const Downloads({Key? key}) : super(key: key);
@@ -13,14 +12,14 @@ class Downloads extends StatefulWidget {
 
 class _DownloadsState extends State<Downloads> {
   final scroll = ScrollController();
-  Future<List>? movies;
+  Future<List<Result>?>? movies;
   @override
   void initState() {
-    movies = ApiServices.upcomingMovies();
+    movies = apiServices.fetchData(upcomingUrl);
     super.initState();
   }
 
-  Widget contents(List data, int index) => Row(
+  Widget contents(Result data) => Row(
         children: [
           Expanded(
             flex: 3,
@@ -29,7 +28,7 @@ class _DownloadsState extends State<Downloads> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image.network(
-                  imageUrl + data[index]["backdrop_path"],
+                  imageUrl + data.backdropPath!,
                   fit: BoxFit.cover,
                   height: 85,
                   errorBuilder: (context, error, stackTrace) => Container(),
@@ -43,7 +42,7 @@ class _DownloadsState extends State<Downloads> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data[index]["title"],
+                  data.title!,
                   style: GoogleFonts.roboto(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -120,8 +119,9 @@ class _DownloadsState extends State<Downloads> {
                           Image.network(
                             "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg",
                             width: 25,
-                            height: 25,  errorBuilder: (context, error, stackTrace) =>
-                                      Container(),
+                            height: 25,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(),
                           ),
                         ],
                       ),
@@ -153,18 +153,18 @@ class _DownloadsState extends State<Downloads> {
               ),
             )
           ],
-          body: FutureBuilder(
+          body: FutureBuilder<List<Result>?>(
             future: movies,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                List datas = snapshot.data as List;
+                List<Result> datas = snapshot.data!;
                 datas = datas.reversed.toList();
                 return ListView(
                   children: [
-                    contents(datas, 0),
-                    contents(datas, 1),
-                    contents(datas, 2),
-                    contents(datas, 3),
+                    contents(datas[0]),
+                    contents(datas[1]),
+                    contents(datas[2]),
+                    contents(datas[3]),
                     const Padding(
                       padding: EdgeInsets.only(
                         top: 10,
@@ -204,12 +204,12 @@ class _DownloadsState extends State<Downloads> {
                         SizedBox(
                           height: 300,
                           width: MediaQuery.of(context).size.width,
-                          child: FutureBuilder(
+                          child: FutureBuilder<List<Result> ?>(
                             future: movies,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
-                                List datas = snapshot.data as List;
+                                List<Result> datas = snapshot.data! ;
                                 datas = datas.reversed.toList();
                                 return Stack(
                                   children: [
@@ -232,7 +232,7 @@ class _DownloadsState extends State<Downloads> {
                                         turns: const AlwaysStoppedAnimation(
                                             -20 / 360),
                                         child: images(
-                                            datas[9]["poster_path"], 170, 120),
+                                            datas[9].posterPath!, 170, 120),
                                       ),
                                     ),
                                     Positioned(
@@ -242,13 +242,13 @@ class _DownloadsState extends State<Downloads> {
                                         turns: const AlwaysStoppedAnimation(
                                             20 / 360),
                                         child: images(
-                                            datas[8]["poster_path"], 170, 120),
+                                            datas[8].posterPath!, 170, 120),
                                       ),
                                     ),
                                     Align(
                                       alignment: const Alignment(0, 0),
                                       child: images(
-                                          datas[12]["poster_path"], 190, 130),
+                                          datas[12].posterPath!, 190, 130),
                                     ),
                                   ],
                                 );

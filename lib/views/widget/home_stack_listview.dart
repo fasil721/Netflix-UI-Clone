@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/design/colors.dart';
 import 'package:bordered_text/bordered_text.dart';
-import 'package:netfix/services/api_services.dart';
+import 'package:netfix/models/movie_models.dart';
 
 class StackListView extends StatefulWidget {
   const StackListView({Key? key}) : super(key: key);
@@ -13,10 +12,10 @@ class StackListView extends StatefulWidget {
 }
 
 class _StackListViewState extends State<StackListView> {
-  Future<List>? datas;
+  Future<List<Result>?>? datas;
   @override
   void initState() {
-    datas = ApiServices.topRatedMovies();
+    datas = apiServices.fetchData(discoverUrl);
     super.initState();
   }
 
@@ -25,16 +24,15 @@ class _StackListViewState extends State<StackListView> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       height: 160,
-      child: FutureBuilder(
+      child: FutureBuilder<List<Result>?>(
         future: datas,
-        builder: (context, AsyncSnapshot snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            List movies = snapshot.data as List;
+            final movies = snapshot.data!;
             return ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 0),
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
-              
               itemCount: 10,
               itemBuilder: (context, index) {
                 return Stack(
@@ -53,7 +51,7 @@ class _StackListViewState extends State<StackListView> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Image.network(
-                            imageUrl + movies[index]["poster_path"],
+                            imageUrl + movies[index].posterPath!,
                             width: 120,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:netfix/design/colors.dart';
+import 'package:netfix/constants.dart';
 import 'package:netfix/functions.dart';
 import 'package:netfix/views/widget/catagories.dart';
 import 'package:netfix/views/widget/head_poster.dart';

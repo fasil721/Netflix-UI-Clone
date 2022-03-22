@@ -1,33 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/design/colors.dart';
 import 'package:netfix/functions.dart';
 import 'package:netfix/models/movie_models.dart';
-import 'package:netfix/services/api_services.dart';
 
-class MainPoster extends StatelessWidget {
+class MainPoster extends StatefulWidget {
   const MainPoster({Key? key}) : super(key: key);
 
   @override
+  State<MainPoster> createState() => _MainPosterState();
+}
+
+class _MainPosterState extends State<MainPoster> {
+  Future<List<Result>?>? datas;
+  @override
+  void initState() {
+    datas = apiServices.fetchData(trendingUrl);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    ApiServices.trendingMovies();
     return Stack(
       children: [
         FutureBuilder<List<Result>?>(
-          future: ApiServices.trendingMovies(),
+          future: datas,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              final datas = snapshot.data!;
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .65,
-                child: Image.network(
-                  imageUrl + datas[19].posterPath!,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(),
-                ),
-              );
+              if (snapshot.data != null) {
+                final datas = snapshot.data!;
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * .65,
+                  child: Image.network(
+                    imageUrl + datas[19].posterPath!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Container(),
+                  ),
+                );
+              }
             }
             return Container();
           },
@@ -134,13 +145,8 @@ class MainPoster extends StatelessWidget {
                     Icons.info_outline,
                     color: white,
                   ),
-                  Text(
-                    "Info",
-                    style: GoogleFonts.poppins(
-                      color: white,
-                      fontSize: 12,
-                    ),
-                  ),
+                  Text("Info",
+                      style: GoogleFonts.poppins(color: white, fontSize: 12)),
                 ],
               )
             ],

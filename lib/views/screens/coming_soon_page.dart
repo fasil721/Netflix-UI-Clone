@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/design/colors.dart';
 import 'package:netfix/functions.dart';
-import 'package:netfix/services/api_services.dart';
+import 'package:netfix/models/movie_models.dart';
 
 class ComingSoonPage extends StatefulWidget {
   const ComingSoonPage({Key? key}) : super(key: key);
@@ -17,10 +16,10 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
   final scroll = ScrollController();
 
   final ValueNotifier<double> notifier = ValueNotifier(0);
-  Future<List>? movies;
+  Future<List<Result>?>? movies;
   @override
   void initState() {
-    movies = ApiServices.upcomingMovies();
+    movies = apiServices.fetchData(upcomingUrl);
     super.initState();
   }
 
@@ -102,16 +101,16 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
           body: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: FutureBuilder(
+            child: FutureBuilder<List<Result>?>(
               future: movies,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  List datas = snapshot.data as List;
+                  final datas = snapshot.data!;
                   return ListView.builder(
                     itemCount: datas.length,
                     itemBuilder: (context, index) {
                       String date;
-                      date = datePicker(datas[index]["release_date"]);
+                      date = datePicker(datas[index].releaseDate!);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -120,7 +119,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                             child: Stack(
                               children: [
                                 Image.network(
-                                  imageUrl + datas[index]["backdrop_path"],
+                                  imageUrl + datas[index].backdropPath!,
                                   width: MediaQuery.of(context).size.width,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
@@ -164,7 +163,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                               bottom: 10,
                             ),
                             child: Text(
-                              datas[index]["title"],
+                              datas[index].title!,
                               style: GoogleFonts.poppins(
                                 fontSize: 22,
                                 color: white,
@@ -177,7 +176,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                               horizontal: 10,
                             ),
                             child: Text(
-                              datas[index]["overview"],
+                              datas[index].overview!,
                               style: GoogleFonts.roboto(
                                 fontSize: 15,
                                 color: grey,
@@ -190,7 +189,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                               vertical: 10,
                             ),
                             child: FutureBuilder(
-                              future: genrePicker(datas[index]["genre_ids"]),
+                              future: genrePicker(datas[index].genreIds!),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {

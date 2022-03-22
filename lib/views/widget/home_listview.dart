@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netfix/constants.dart';
+import 'package:netfix/models/movie_models.dart';
 import 'package:netfix/services/api_services.dart';
 
 import 'item_view.dart';
@@ -13,10 +14,10 @@ class HomeListview extends StatefulWidget {
 }
 
 class _PopularListviewState extends State<HomeListview> {
-  Future<List>? movies;
+  Future<List<Result>?>? movies;
   @override
   void initState() {
-    movies = ApiServices.upcomingMovies();
+    movies = apiServices.fetchData(upcomingUrl);
     super.initState();
   }
 
@@ -26,11 +27,11 @@ class _PopularListviewState extends State<HomeListview> {
       margin: const EdgeInsets.all(10),
       height: 160,
       width: 120,
-      child: FutureBuilder(
+      child: FutureBuilder<List<Result>?>(
         future: movies,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            List datas = snapshot.data as List;
+            List<Result> datas = snapshot.data!;
             if (widget.code == 2) {
               datas = datas.reversed.toList();
             }
@@ -51,7 +52,7 @@ class _PopularListviewState extends State<HomeListview> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Image.network(
-                      imageUrl + datas[index]["poster_path"],
+                      imageUrl + datas[index].posterPath!,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(),
                     ),

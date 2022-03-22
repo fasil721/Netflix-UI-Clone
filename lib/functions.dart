@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:netfix/design/colors.dart';
+import 'package:netfix/constants.dart';
 import 'package:netfix/services/api_services.dart';
 
 Widget headings(String txt) => Container(
@@ -32,19 +32,19 @@ String datePicker(String date) {
   } else if (month == "07") {
     return day + " July";
   } else if (month == "08") {
-    return day + " Augest";
+    return "$day Augest";
   } else if (month == "09") {
-    return day + " September";
+    return "$day September";
   } else if (month == "10") {
-    return day + " October";
+    return "$day October";
   } else if (month == "11") {
-    return day + " November";
+    return "$day November";
   }
-  return day + " December";
+  return "$day December";
 }
 
 Future<List> genrePicker(List datas) async {
-  final List genres = await ApiServices.genre();
+  final List genres = await ApiServices().genre();
   List _genres = [];
   final List temp = datas;
   for (var i in genres) {

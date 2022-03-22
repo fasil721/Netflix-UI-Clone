@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/design/colors.dart';
 
 class Catogories extends StatelessWidget {
   const Catogories({Key? key}) : super(key: key);
