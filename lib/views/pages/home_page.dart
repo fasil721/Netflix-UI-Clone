@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:netfix/api/functions.dart';
 import 'package:netfix/design/colors.dart';
-import 'package:netfix/widget/catagories.dart';
-import 'package:netfix/widget/home_listview.dart';
-import 'package:netfix/widget/home_stack_listview.dart';
-import 'package:netfix/widget/head_poster.dart';
+import 'package:netfix/functions.dart';
+import 'package:netfix/views/widget/catagories.dart';
+import 'package:netfix/views/widget/head_poster.dart';
+import 'package:netfix/views/widget/home_listview.dart';
+import 'package:netfix/views/widget/home_stack_listview.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

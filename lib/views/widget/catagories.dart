@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:netfix/api/functions.dart';
+import 'package:netfix/constants.dart';
 import 'package:netfix/design/colors.dart';
 
 class Catogories extends StatelessWidget {
@@ -49,9 +49,7 @@ class Catogories extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 80,
-                ),
+                const SizedBox(height: 80),
               ],
             ),
           ),

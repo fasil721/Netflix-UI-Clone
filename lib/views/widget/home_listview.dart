@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:netfix/api/api.dart';
+import 'package:netfix/services/api/api.dart';
 
 import 'item_view.dart';
 
