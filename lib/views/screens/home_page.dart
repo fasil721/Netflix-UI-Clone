@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/functions.dart';
 import 'package:netfix/views/widget/catagories.dart';
 import 'package:netfix/views/widget/head_poster.dart';
 import 'package:netfix/views/widget/home_listview.dart';
@@ -41,18 +40,18 @@ class _HomePageState extends State<HomePage> {
               toolbarOpacity: 0,
               elevation: 0,
               backgroundColor: Colors.black.withOpacity(
-                  notifier.value < 100 ? (1.00 - offset) * 0.8 : 0.8),
+                notifier.value < 100 ? (1.00 - offset) * 0.8 : 0.8,
+              ),
               bottom: PreferredSize(
-                preferredSize: notifier.value < 100
-                    ? Size(0, 42 * offset)
-                    : const Size(0, 0),
+                preferredSize:
+                    notifier.value < 100 ? Size(0, 42 * offset) : Size.zero,
                 child: SizedBox(
                   height: notifier.value < 100 ? (60 * offset) + 38 : 38,
                   child: Stack(
                     children: [
                       ClipRRect(
                         child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 0),
+                          duration: const Duration(microseconds: 1),
                           transform: Matrix4.translationValues(0, yOffset, 0),
                           child: ListTile(
                             leading: Image.asset(
@@ -162,16 +161,16 @@ class _HomePageState extends State<HomePage> {
                 return false;
               },
               child: ListView(
-                padding: const EdgeInsets.only(top: 0),
+                padding: EdgeInsets.zero,
                 controller: scroll,
                 physics: const ScrollPhysics(),
                 children: [
                   const MainPoster(),
-                  headings("Popular On Netflix"),
+                  controller.headings("Popular On Netflix"),
                   const HomeListview(code: 1),
-                  headings("Trending Now"),
+                  controller.headings("Trending Now"),
                   const HomeListview(code: 2),
-                  headings("Top 10 Rated in India"),
+                  controller.headings("Top 10 Rated in India"),
                   const StackListView(),
                 ],
               ),

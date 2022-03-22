@@ -19,7 +19,6 @@ class Catogories extends StatelessWidget {
                   height: 50,
                 ),
                 Align(
-                  alignment: const Alignment(0, 0),
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     child: Text(
@@ -34,7 +33,6 @@ class Catogories extends StatelessWidget {
                 ),
                 ...catogories.map(
                   (e) => Align(
-                    alignment: const Alignment(0, 0),
                     child: Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(
@@ -53,7 +51,7 @@ class Catogories extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: const Alignment(0, 1),
+            alignment: Alignment.bottomCenter,
             child: GestureDetector(
               onTap: () {
                 Navigator.pop(context);

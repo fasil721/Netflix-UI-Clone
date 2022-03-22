@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/functions.dart';
 import 'package:netfix/models/movie_models.dart';
 
 class MainPoster extends StatefulWidget {
@@ -77,13 +76,13 @@ class _MainPosterState extends State<MainPoster> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                textGenre("Adrenailine Rush"),
-                dotIcon(),
-                textGenre("Inspiring"),
-                dotIcon(),
-                textGenre("Exciting"),
-                dotIcon(),
-                textGenre("Extreme Sports"),
+                controller.textGenre("Adrenailine Rush"),
+                controller.dotIcon(),
+                controller.textGenre("Inspiring"),
+                controller.dotIcon(),
+                controller.textGenre("Exciting"),
+                controller.dotIcon(),
+                controller.textGenre("Extreme Sports"),
               ],
             ),
           ),
@@ -145,8 +144,10 @@ class _MainPosterState extends State<MainPoster> {
                     Icons.info_outline,
                     color: white,
                   ),
-                  Text("Info",
-                      style: GoogleFonts.poppins(color: white, fontSize: 12)),
+                  Text(
+                    "Info",
+                    style: GoogleFonts.poppins(color: white, fontSize: 12),
+                  ),
                 ],
               )
             ],

@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netfix/constants.dart';
 import 'package:netfix/models/movie_models.dart';
-import 'package:netfix/services/api_services.dart';
-
-import 'item_view.dart';
+import 'package:netfix/views/widget/item_view.dart';
 
 class HomeListview extends StatefulWidget {
   const HomeListview({Key? key, required this.code}) : super(key: key);
@@ -29,7 +26,7 @@ class _PopularListviewState extends State<HomeListview> {
       width: 120,
       child: FutureBuilder<List<Result>?>(
         future: movies,
-        builder: (context, AsyncSnapshot snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             List<Result> datas = snapshot.data!;
             if (widget.code == 2) {

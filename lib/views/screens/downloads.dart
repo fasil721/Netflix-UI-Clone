@@ -62,7 +62,6 @@ class _DownloadsState extends State<Downloads> {
             ),
           ),
           Expanded(
-            flex: 1,
             child: Icon(
               Icons.arrow_forward_ios,
               color: white.withOpacity(0.5),
@@ -89,11 +88,8 @@ class _DownloadsState extends State<Downloads> {
       child: Scaffold(
         backgroundColor: black,
         body: NestedScrollView(
-          scrollDirection: Axis.vertical,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
-              snap: false,
-              pinned: false,
               floating: true,
               expandedHeight: 112,
               flexibleSpace: FlexibleSpaceBar(
@@ -191,7 +187,9 @@ class _DownloadsState extends State<Downloads> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
+                            horizontal: 10,
+                            vertical: 10,
+                          ),
                           child: Text(
                             "We'll download a persolised selection of movies and shows for you, so there's always something to watch on your phone.",
                             style: GoogleFonts.roboto(
@@ -204,17 +202,16 @@ class _DownloadsState extends State<Downloads> {
                         SizedBox(
                           height: 300,
                           width: MediaQuery.of(context).size.width,
-                          child: FutureBuilder<List<Result> ?>(
+                          child: FutureBuilder<List<Result>?>(
                             future: movies,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
-                                List<Result> datas = snapshot.data! ;
+                                List<Result> datas = snapshot.data!;
                                 datas = datas.reversed.toList();
                                 return Stack(
                                   children: [
                                     Align(
-                                      alignment: const Alignment(0, 0),
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -230,9 +227,13 @@ class _DownloadsState extends State<Downloads> {
                                       left: 65,
                                       child: RotationTransition(
                                         turns: const AlwaysStoppedAnimation(
-                                            -20 / 360),
+                                          -20 / 360,
+                                        ),
                                         child: images(
-                                            datas[9].posterPath!, 170, 120),
+                                          datas[9].posterPath!,
+                                          170,
+                                          120,
+                                        ),
                                       ),
                                     ),
                                     Positioned(
@@ -240,15 +241,21 @@ class _DownloadsState extends State<Downloads> {
                                       right: 65,
                                       child: RotationTransition(
                                         turns: const AlwaysStoppedAnimation(
-                                            20 / 360),
+                                          20 / 360,
+                                        ),
                                         child: images(
-                                            datas[8].posterPath!, 170, 120),
+                                          datas[8].posterPath!,
+                                          170,
+                                          120,
+                                        ),
                                       ),
                                     ),
                                     Align(
-                                      alignment: const Alignment(0, 0),
                                       child: images(
-                                          datas[12].posterPath!, 190, 130),
+                                        datas[12].posterPath!,
+                                        190,
+                                        130,
+                                      ),
                                     ),
                                   ],
                                 );

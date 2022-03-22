@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/functions.dart';
 import 'package:netfix/models/movie_models.dart';
 
 class ComingSoonPage extends StatefulWidget {
@@ -29,11 +28,8 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
       child: Scaffold(
         backgroundColor: black,
         body: NestedScrollView(
-          scrollDirection: Axis.vertical,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
-              snap: false,
-              pinned: false,
               floating: true,
               expandedHeight: 120,
               flexibleSpace: FlexibleSpaceBar(
@@ -110,7 +106,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                     itemCount: datas.length,
                     itemBuilder: (context, index) {
                       String date;
-                      date = datePicker(datas[index].releaseDate!);
+                      date = controller.datePicker(datas[index].releaseDate!);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -126,15 +122,13 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                                       Container(),
                                 ),
                                 Align(
-                                  alignment: const Alignment(0, 0),
                                   child: Container(
                                     height: 55,
                                     width: 55,
                                     decoration: BoxDecoration(
                                       color: Colors.black54,
                                       borderRadius: BorderRadius.circular(50),
-                                      border:
-                                          Border.all(width: 1, color: white),
+                                      border: Border.all(color: white),
                                     ),
                                     child: const Icon(
                                       Icons.play_arrow,
@@ -149,7 +143,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(
-                              "Coming On " + date,
+                              "Coming On $date",
                               style: GoogleFonts.roboto(
                                 fontSize: 13,
                                 color: grey,
@@ -188,12 +182,13 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                               horizontal: 10,
                               vertical: 10,
                             ),
-                            child: FutureBuilder(
-                              future: genrePicker(datas[index].genreIds!),
+                            child: FutureBuilder<List<String>>(
+                              future: controller
+                                  .genrePicker(datas[index].genreIds!),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
-                                  List _genres = snapshot.data as List;
+                                  final _genres = snapshot.data!;
                                   return Row(
                                     children: [
                                       ..._genres.map(
@@ -203,21 +198,23 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                                               Text(
                                                 element,
                                                 style: GoogleFonts.roboto(
-                                                    fontSize: 13, color: white),
+                                                  fontSize: 13,
+                                                  color: white,
+                                                ),
                                               ),
-                                              _genres.last != element
-                                                  ? const Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 4),
-                                                      child: Icon(
-                                                        FontAwesomeIcons
-                                                            .ggCircle,
-                                                        color: blue,
-                                                        size: 4,
-                                                      ),
-                                                    )
-                                                  : const SizedBox(),
+                                              if (_genres.last != element)
+                                                const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 4,
+                                                  ),
+                                                  child: Icon(
+                                                    FontAwesomeIcons.ggCircle,
+                                                    color: blue,
+                                                    size: 4,
+                                                  ),
+                                                )
+                                              else
+                                                const SizedBox(),
                                             ],
                                           );
                                         },

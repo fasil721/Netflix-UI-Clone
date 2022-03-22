@@ -4,7 +4,7 @@ import 'package:netfix/views/screens/coming_soon_page.dart';
 import 'package:netfix/views/screens/downloads.dart';
 import 'package:netfix/views/screens/home_page.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

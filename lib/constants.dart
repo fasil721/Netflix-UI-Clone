@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netfix/controller/controller.dart';
 import 'package:netfix/services/api_services.dart';
 
 const imageUrl = "https://image.tmdb.org/t/p/w500";
@@ -11,8 +12,8 @@ const white = Colors.white;
 const black = Color(0xff000000);
 const blue = Colors.blue;
 const grey = Color(0xff585858);
-
 final apiServices = ApiServices();
+final controller = Controller();
 const catogories = [
   "My List",
   "Available for Download",

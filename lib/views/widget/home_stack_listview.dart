@@ -1,7 +1,7 @@
+import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:bordered_text/bordered_text.dart';
 import 'package:netfix/models/movie_models.dart';
 
 class StackListView extends StatefulWidget {
@@ -30,7 +30,7 @@ class _StackListViewState extends State<StackListView> {
           if (snapshot.connectionState == ConnectionState.done) {
             final movies = snapshot.data!;
             return ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 0),
+              padding: EdgeInsets.zero,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemCount: 10,
@@ -76,22 +76,23 @@ class _StackListViewState extends State<StackListView> {
                         ),
                       ),
                     ),
-                    index != 0
-                        ? Container(
-                            width: 25,
-                            height: 160,
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.centerRight,
-                                end: Alignment.centerLeft,
-                                colors: [
-                                  Colors.transparent,
-                                  Colors.black,
-                                ],
-                              ),
-                            ),
-                          )
-                        : Container()
+                    if (index != 0)
+                      Container(
+                        width: 25,
+                        height: 160,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.centerRight,
+                            end: Alignment.centerLeft,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black,
+                            ],
+                          ),
+                        ),
+                      )
+                    else
+                      Container()
                   ],
                 );
               },

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/functions.dart';
+import 'package:netfix/models/movie_models.dart';
 
 class ItemView extends StatelessWidget {
   const ItemView({Key? key, required this.movie}) : super(key: key);
-  final dynamic movie;
+  final Result movie;
   @override
   Widget build(BuildContext context) {
-    String date = datePicker(movie["release_date"]);
-    String temp = movie["release_date"];
+    final String date = controller.datePicker(movie.releaseDate!);
+    final String temp = movie.releaseDate!;
     final year = temp.split("").toList();
     return SafeArea(
       child: Scaffold(
@@ -47,20 +47,19 @@ class ItemView extends StatelessWidget {
               child: Stack(
                 children: [
                   Image.network(
-                    imageUrl + movie["backdrop_path"],
+                    imageUrl + movie.backdropPath!,
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => Container(),
                   ),
                   Align(
-                    alignment: const Alignment(0, 0),
                     child: Container(
                       height: 55,
                       width: 55,
                       decoration: BoxDecoration(
                         color: Colors.black54,
                         borderRadius: BorderRadius.circular(50),
-                        border: Border.all(width: 1, color: white),
+                        border: Border.all(color: white),
                       ),
                       child: const Icon(
                         Icons.play_arrow,
@@ -78,7 +77,7 @@ class ItemView extends StatelessWidget {
                 left: 10,
               ),
               child: Text(
-                movie["title"],
+                movie.title!,
                 style: GoogleFonts.poppins(
                   fontSize: 22,
                   color: white,
@@ -89,13 +88,7 @@ class ItemView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Released On " +
-                    date +
-                    " " +
-                    year[0] +
-                    year[1] +
-                    year[2] +
-                    year[3],
+                "Released On $date ${year[0]}${year[1]}${year[2]}${year[3]}",
                 style: GoogleFonts.roboto(
                   fontSize: 13,
                   color: grey,
@@ -162,7 +155,7 @@ class ItemView extends StatelessWidget {
                 horizontal: 10,
               ),
               child: Text(
-                movie["overview"],
+                movie.overview!,
                 style: GoogleFonts.roboto(
                   fontSize: 15,
                   color: grey,
@@ -174,11 +167,11 @@ class ItemView extends StatelessWidget {
                 horizontal: 10,
                 vertical: 10,
               ),
-              child: FutureBuilder(
-                future: genrePicker(movie["genre_ids"]),
+              child: FutureBuilder<List<String>>(
+                future: controller.genrePicker(movie.genreIds!),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    List _genres = snapshot.data as List;
+                    final _genres = snapshot.data!;
                     return Row(
                       children: [
                         ..._genres.map(
@@ -188,19 +181,22 @@ class ItemView extends StatelessWidget {
                                 Text(
                                   element,
                                   style: GoogleFonts.roboto(
-                                      fontSize: 13, color: white),
+                                    fontSize: 13,
+                                    color: white,
+                                  ),
                                 ),
-                                _genres.last != element
-                                    ? const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 4),
-                                        child: Icon(
-                                          FontAwesomeIcons.ggCircle,
-                                          color: blue,
-                                          size: 4,
-                                        ),
-                                      )
-                                    : const SizedBox(),
+                                if (_genres.last != element)
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 4),
+                                    child: Icon(
+                                      FontAwesomeIcons.ggCircle,
+                                      color: blue,
+                                      size: 4,
+                                    ),
+                                  )
+                                else
+                                  const SizedBox(),
                               ],
                             );
                           },
