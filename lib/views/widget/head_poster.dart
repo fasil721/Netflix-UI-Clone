@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:netfix/constants.dart';
 import 'package:netfix/design/colors.dart';
 import 'package:netfix/functions.dart';
-import 'package:netfix/services/api/api.dart';
+import 'package:netfix/models/movie_models.dart';
+import 'package:netfix/services/api_services.dart';
 
-class MainPoster extends StatefulWidget {
+class MainPoster extends StatelessWidget {
   const MainPoster({Key? key}) : super(key: key);
 
   @override
-  State<MainPoster> createState() => _MainPosterState();
-}
-
-class _MainPosterState extends State<MainPoster> {
-  Future<List>? movies;
-  @override
-  void initState() {
-    movies = Api.trendingMovies();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    ApiServices.trendingMovies();
     return Stack(
       children: [
-        FutureBuilder(
-          future: movies,
+        FutureBuilder<List<Result>?>(
+          future: ApiServices.trendingMovies(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              List datas = snapshot.data as List;
+              final datas = snapshot.data!;
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * .65,
                 child: Image.network(
-                  imageUrl + datas[19]["poster_path"],
+                  imageUrl + datas[19].posterPath!,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(),
                 ),

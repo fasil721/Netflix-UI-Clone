@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:netfix/services/api/api.dart';
+import 'package:netfix/constants.dart';
+import 'package:netfix/services/api_services.dart';
 
 import 'item_view.dart';
 
@@ -15,7 +16,7 @@ class _PopularListviewState extends State<HomeListview> {
   Future<List>? movies;
   @override
   void initState() {
-    movies = Api.upcomingMovies();
+    movies = ApiServices.upcomingMovies();
     super.initState();
   }
 

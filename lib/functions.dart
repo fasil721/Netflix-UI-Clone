@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/design/colors.dart';
-import 'package:netfix/services/api/api.dart';
-
+import 'package:netfix/services/api_services.dart';
 
 Widget headings(String txt) => Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -45,7 +44,7 @@ String datePicker(String date) {
 }
 
 Future<List> genrePicker(List datas) async {
-  final List genres = await Api.genre();
+  final List genres = await ApiServices.genre();
   List _genres = [];
   final List temp = datas;
   for (var i in genres) {

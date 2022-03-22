@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:netfix/constants.dart';
 import 'package:netfix/design/colors.dart';
-import 'package:netfix/services/api/api.dart';
+import 'package:netfix/services/api_services.dart';
 
 class Downloads extends StatefulWidget {
   const Downloads({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _DownloadsState extends State<Downloads> {
   Future<List>? movies;
   @override
   void initState() {
-    movies = Api.upcomingMovies();
+    movies = ApiServices.upcomingMovies();
     super.initState();
   }
 
@@ -71,6 +72,7 @@ class _DownloadsState extends State<Downloads> {
           ),
         ],
       );
+
   Widget images(String data, double h, double w) => ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: Image.network(
@@ -81,6 +83,7 @@ class _DownloadsState extends State<Downloads> {
           errorBuilder: (context, error, stackTrace) => Container(),
         ),
       );
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
