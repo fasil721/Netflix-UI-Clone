@@ -53,9 +53,7 @@ class Catogories extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: () => Navigator.pop(context),
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 20),
                 decoration: BoxDecoration(
