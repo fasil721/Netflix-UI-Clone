@@ -37,7 +37,7 @@ class Result {
         posterPath: json["poster_path"] as String,
         overview: json["overview"] as String,
         releaseDate: json["release_date"] as String?,
-        backdropPath: json["backdrop_path"] as String,
+        backdropPath: json["backdrop_path"] as String?,
         title: json["title"] as String?,
         genreIds: List<int>.from((json["genre_ids"] as List).map((x) => x)),
       );

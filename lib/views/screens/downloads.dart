@@ -27,12 +27,17 @@ class _DownloadsState extends State<Downloads> {
               padding: const EdgeInsets.all(8.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image.network(
-                  imageUrl + data.backdropPath!,
-                  fit: BoxFit.cover,
-                  height: 85,
-                  errorBuilder: (context, error, stackTrace) => Container(),
-                ),
+                child: data.backdropPath != null
+                    ? Image.network(
+                        imageUrl + data.backdropPath!,
+                        fit: BoxFit.cover,
+                        height: 85,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Container(),
+                      )
+                    : Container(
+                        height: 85,
+                      ),
               ),
             ),
           ),
@@ -153,143 +158,145 @@ class _DownloadsState extends State<Downloads> {
             future: movies,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                List<Result> datas = snapshot.data!;
-                datas = datas.reversed.toList();
-                return ListView(
-                  children: [
-                    contents(datas[0]),
-                    contents(datas[1]),
-                    contents(datas[2]),
-                    contents(datas[3]),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        top: 10,
-                        bottom: 20,
+                if (snapshot.data != null) {
+                  List<Result> datas = snapshot.data!;
+                  datas = datas.reversed.toList();
+                  return ListView(
+                    children: [
+                      contents(datas[0]),
+                      contents(datas[1]),
+                      contents(datas[2]),
+                      contents(datas[3]),
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          top: 10,
+                          bottom: 20,
+                        ),
+                        child: Divider(
+                          color: white,
+                          height: 1,
+                        ),
                       ),
-                      child: Divider(
-                        color: white,
-                        height: 1,
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            "Indroducing Downloads for You",
-                            style: GoogleFonts.roboto(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: white,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10,
-                          ),
-                          child: Text(
-                            "We'll download a persolised selection of movies and shows for you, so there's always something to watch on your phone.",
-                            style: GoogleFonts.roboto(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w300,
-                              color: white.withOpacity(0.6),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 300,
-                          width: MediaQuery.of(context).size.width,
-                          child: FutureBuilder<List<Result>?>(
-                            future: movies,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                List<Result> datas = snapshot.data!;
-                                datas = datas.reversed.toList();
-                                return Stack(
-                                  children: [
-                                    Align(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(150),
-                                          color: grey.withOpacity(0.6),
-                                        ),
-                                        height: 240,
-                                        width: 240,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 80,
-                                      left: 65,
-                                      child: RotationTransition(
-                                        turns: const AlwaysStoppedAnimation(
-                                          -20 / 360,
-                                        ),
-                                        child: images(
-                                          datas[9].posterPath!,
-                                          170,
-                                          120,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 80,
-                                      right: 65,
-                                      child: RotationTransition(
-                                        turns: const AlwaysStoppedAnimation(
-                                          20 / 360,
-                                        ),
-                                        child: images(
-                                          datas[8].posterPath!,
-                                          170,
-                                          120,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      child: images(
-                                        datas[12].posterPath!,
-                                        190,
-                                        130,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }
-                              return Container();
-                            },
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: blue[700],
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10,
-                          ),
-                          height: 40,
-                          width: MediaQuery.of(context).size.width,
-                          child: Center(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "Set Up",
+                              "Indroducing Downloads for You",
                               style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
                                 color: white,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                );
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
+                            child: Text(
+                              "We'll download a persolised selection of movies and shows for you, so there's always something to watch on your phone.",
+                              style: GoogleFonts.roboto(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300,
+                                color: white.withOpacity(0.6),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 300,
+                            width: MediaQuery.of(context).size.width,
+                            child: FutureBuilder<List<Result>?>(
+                              future: movies,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  List<Result> datas = snapshot.data!;
+                                  datas = datas.reversed.toList();
+                                  return Stack(
+                                    children: [
+                                      Align(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(150),
+                                            color: grey.withOpacity(0.6),
+                                          ),
+                                          height: 240,
+                                          width: 240,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 80,
+                                        left: 65,
+                                        child: RotationTransition(
+                                          turns: const AlwaysStoppedAnimation(
+                                            -20 / 360,
+                                          ),
+                                          child: images(
+                                            datas[9].posterPath!,
+                                            170,
+                                            120,
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 80,
+                                        right: 65,
+                                        child: RotationTransition(
+                                          turns: const AlwaysStoppedAnimation(
+                                            20 / 360,
+                                          ),
+                                          child: images(
+                                            datas[8].posterPath!,
+                                            170,
+                                            120,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        child: images(
+                                          datas[12].posterPath!,
+                                          190,
+                                          130,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                                return Container();
+                              },
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: blue[700],
+                            ),
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
+                            height: 40,
+                            width: MediaQuery.of(context).size.width,
+                            child: Center(
+                              child: Text(
+                                "Set Up",
+                                style: GoogleFonts.roboto(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                }
               }
               return Container();
             },

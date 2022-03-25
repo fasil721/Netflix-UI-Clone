@@ -1,3 +1,4 @@
+import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,9 +6,7 @@ import 'package:netfix/constants.dart';
 import 'package:netfix/home/bloc/home_bloc.dart';
 import 'package:netfix/models/movie_models.dart';
 import 'package:netfix/services/tmdb_service.dart';
-import 'package:netfix/views/widget/catagories.dart';
 import 'package:netfix/views/widget/home_appbar.dart';
-import 'package:netfix/views/widget/home_stack_listview.dart';
 import 'package:netfix/views/widget/item_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -74,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   controller.headings("Trending Now"),
                   _buildHomeListview(code: 2),
                   controller.headings("Top 10 Rated in India"),
-                  const StackListView(),
+                  _buildstackListView(),
                 ],
               ),
             ),
@@ -89,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeListLoadingState) {
-              return const SizedBox(height: 160, width: 120);
+              return _buildListLoading();
             }
             if (state is HomeListLoadedState) {
               List<Result> datas = state.movies;
@@ -273,5 +272,116 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
+      );
+
+  Widget _buildstackListView() => Container(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        height: 160,
+        child: BlocProvider(
+          create: (context) =>
+              HomeBloc(RepositoryProvider.of<TmdbServices>(context))
+                ..add(LoadTrendingMoviesEvent()),
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is MainPosterLoadingState) {
+                return _buildListLoading();
+              }
+              if (state is MainPosterLoadedState) {
+                final datas = state.movies;
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Stack(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      children: [
+                        Container(
+                          color: black,
+                          width: index == 9 ? 185 : 140,
+                          height: 120,
+                        ),
+                        Positioned(
+                          right: -10,
+                          bottom: 0,
+                          child: SizedBox(
+                            height: 160,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image.network(
+                                imageUrl + datas[index].posterPath!,
+                                width: 120,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: index == 0 ? 0 : -6,
+                          bottom: -20,
+                          child: BorderedText(
+                            strokeWidth: 2,
+                            strokeColor: white,
+                            child: Text(
+                              (index + 1).toString(),
+                              style: GoogleFonts.roboto(
+                                fontSize: 90,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if (index != 0)
+                          Container(
+                            width: 25,
+                            height: 160,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerRight,
+                                end: Alignment.centerLeft,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black,
+                                ],
+                              ),
+                            ),
+                          )
+                        else
+                          Container()
+                      ],
+                    );
+                  },
+                );
+              }
+              return const SizedBox();
+            },
+          ),
+        ),
+      );
+  Widget _buildListLoading() => Container(
+        margin: const EdgeInsets.all(10),
+        height: 160,
+        width: 120,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 4,
+          itemBuilder: (context, index) => const SizedBox(
+            width: 120,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 1,
+              ),
+            ),
+          ),
+          separatorBuilder: (BuildContext context, int index) =>
+              const SizedBox(width: 10),
+        ),
       );
 }

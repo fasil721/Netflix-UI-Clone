@@ -28,8 +28,8 @@ class ApiServices {
       Fluttertoast.showToast(msg: "No internet connection");
     } on PlatformException {
       Fluttertoast.showToast(msg: "Invalid Format");
-      } catch (e) {
-        Fluttertoast.showToast(msg: e.toString());
+      // } catch (e) {
+      //   Fluttertoast.showToast(msg: e.toString());
     }
     return null;
   }

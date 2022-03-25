@@ -101,135 +101,139 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
               future: movies,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  final datas = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: datas.length,
-                    itemBuilder: (context, index) {
-                      String date;
-                      date = controller.datePicker(datas[index].releaseDate!);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            child: Stack(
-                              children: [
-                                Image.network(
-                                  imageUrl + datas[index].backdropPath!,
-                                  width: MediaQuery.of(context).size.width,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(),
-                                ),
-                                Align(
-                                  child: Container(
-                                    height: 55,
-                                    width: 55,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black54,
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(color: white),
-                                    ),
-                                    child: const Icon(
-                                      Icons.play_arrow,
-                                      color: white,
-                                      size: 35,
+                  if (snapshot.data != null) {
+                    final datas = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: datas.length,
+                      itemBuilder: (context, index) {
+                        String date;
+                        date = controller.datePicker(datas[index].releaseDate!);
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              child: Stack(
+                                children: [
+                                  Image.network(
+                                    imageUrl + datas[index].backdropPath!,
+                                    width: MediaQuery.of(context).size.width,
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(),
+                                  ),
+                                  Align(
+                                    child: Container(
+                                      height: 55,
+                                      width: 55,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black54,
+                                        borderRadius: BorderRadius.circular(50),
+                                        border: Border.all(color: white),
+                                      ),
+                                      child: const Icon(
+                                        Icons.play_arrow,
+                                        color: white,
+                                        size: 35,
+                                      ),
                                     ),
                                   ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                "Coming On $date",
+                                style: GoogleFonts.roboto(
+                                  fontSize: 13,
+                                  color: grey,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Coming On $date",
-                              style: GoogleFonts.roboto(
-                                fontSize: 13,
-                                color: grey,
-                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              bottom: 10,
-                            ),
-                            child: Text(
-                              datas[index].title!,
-                              style: GoogleFonts.poppins(
-                                fontSize: 22,
-                                color: white,
-                                fontWeight: FontWeight.w500,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                                bottom: 10,
+                              ),
+                              child: Text(
+                                datas[index].title!,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 22,
+                                  color: white,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            child: Text(
-                              datas[index].overview!,
-                              style: GoogleFonts.roboto(
-                                fontSize: 15,
-                                color: grey,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: Text(
+                                datas[index].overview!,
+                                style: GoogleFonts.roboto(
+                                  fontSize: 15,
+                                  color: grey,
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 10,
-                            ),
-                            child: FutureBuilder<List<String>>(
-                              future: controller
-                                  .genrePicker(datas[index].genreIds!),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  final _genres = snapshot.data!;
-                                  return Row(
-                                    children: [
-                                      ..._genres.map(
-                                        (element) {
-                                          return Row(
-                                            children: [
-                                              Text(
-                                                element,
-                                                style: GoogleFonts.roboto(
-                                                  fontSize: 13,
-                                                  color: white,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              child: FutureBuilder<List<String>>(
+                                future: controller
+                                    .genrePicker(datas[index].genreIds!),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    final _genres = snapshot.data!;
+                                    return Row(
+                                      children: [
+                                        ..._genres.map(
+                                          (element) {
+                                            return Row(
+                                              children: [
+                                                Text(
+                                                  element,
+                                                  style: GoogleFonts.roboto(
+                                                    fontSize: 13,
+                                                    color: white,
+                                                  ),
                                                 ),
-                                              ),
-                                              if (_genres.last != element)
-                                                const Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: 4,
-                                                  ),
-                                                  child: Icon(
-                                                    FontAwesomeIcons.ggCircle,
-                                                    color: blue,
-                                                    size: 4,
-                                                  ),
-                                                )
-                                              else
-                                                const SizedBox(),
-                                            ],
-                                          );
-                                        },
-                                      )
-                                    ],
-                                  );
-                                }
-                                return const SizedBox();
-                              },
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                  );
+                                                if (_genres.last != element)
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal: 4,
+                                                    ),
+                                                    child: Icon(
+                                                      FontAwesomeIcons.ggCircle,
+                                                      color: blue,
+                                                      size: 4,
+                                                    ),
+                                                  )
+                                                else
+                                                  const SizedBox(),
+                                              ],
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  }
+                                  return const SizedBox();
+                                },
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  }
                 }
                 return const SizedBox();
               },

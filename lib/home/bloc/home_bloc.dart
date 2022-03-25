@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(MainPosterLoadedState(result));
       }
     });
-    
+
     on<LoadDiscoverMoviesEvent>((event, emit) async {
       emit(HomeListLoadingState());
       final result = await _tmdb.fetchData(event.url);
