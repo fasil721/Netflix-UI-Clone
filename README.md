@@ -1,12 +1,12 @@
 # Netflix-ui-clone
 
-<a href="https://drive.google.com/file/d/1JXKAV2oKWztsGG-Neul08gDMl-mw8g4O/view?usp=sharing">Download Release app</a>
+<a href="https://drive.google.com/file/d/1wir1odNL0zOTufdUX-IE5w-AqcKxD_Ft/view?usp=sharing">Download Release app</a>
 
 ## Ohter App Features and Technology used.
 
 - Collected data from TMDB API.
 - API Integration using HTTP.
-- MVC Architecture 
+- Bloc Pattern
 - Custom Home Appbar animation
 
 <p align="center">
