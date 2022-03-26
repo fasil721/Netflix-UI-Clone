@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
+import 'package:netfix/functions.dart';
 import 'package:netfix/models/movie_models.dart';
 
 class ItemView extends StatelessWidget {
@@ -9,7 +10,7 @@ class ItemView extends StatelessWidget {
   final Result movie;
   @override
   Widget build(BuildContext context) {
-    final String date = controller.datePicker(movie.releaseDate!);
+    final String date = datePicker(movie.releaseDate!);
     final String temp = movie.releaseDate!;
     final year = temp.split("").toList();
     return SafeArea(
@@ -168,7 +169,7 @@ class ItemView extends StatelessWidget {
                 vertical: 10,
               ),
               child: FutureBuilder<List<String>>(
-                future: controller.genrePicker(movie.genreIds!),
+                future: genrePicker(movie.genreIds!),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     final _genres = snapshot.data!;

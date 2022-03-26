@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netfix/screens/screens/coming_soon/coming_soon.dart';
+import 'package:netfix/screens/screens/downloads/downloads.dart';
+import 'package:netfix/screens/screens/home/home.dart';
 import 'package:netfix/services/tmdb_service.dart';
-import 'package:netfix/views/screens/coming_soon/coming_soon.dart';
-import 'package:netfix/views/screens/downloads/downloads.dart';
-import 'package:netfix/views/screens/home/home.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([

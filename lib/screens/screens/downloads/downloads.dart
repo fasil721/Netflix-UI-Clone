@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
 import 'package:netfix/models/movie_models.dart';
+import 'package:netfix/screens/screens/downloads/bloc/downloads_bloc.dart';
 import 'package:netfix/services/tmdb_service.dart';
-import 'package:netfix/views/screens/downloads/bloc/downloads_bloc.dart';
 
 class Downloads extends StatefulWidget {
   const Downloads({Key? key}) : super(key: key);

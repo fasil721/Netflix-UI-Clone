@@ -18,3 +18,10 @@ class UpcomingMoviesLoadedState extends ComingsoonState {
   @override
   List<Object> get props => [movies];
 }
+
+class LoadGenresState extends ComingsoonState {
+  final List<Genre> genres;
+  const LoadGenresState(this.genres);
+  @override
+  List<Object> get props => [genres];
+}

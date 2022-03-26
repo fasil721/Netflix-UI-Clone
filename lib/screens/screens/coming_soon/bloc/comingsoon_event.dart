@@ -12,3 +12,8 @@ class LoadUpcomingMoviesEvent extends ComingsoonEvent {
   @override
   List<Object> get props => [url];
 }
+
+class LoadGenresEvent extends ComingsoonEvent {
+  @override
+  List<Object> get props => [];
+}

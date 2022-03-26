@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/models/movie_models.dart';
+import 'package:netfix/functions.dart';
+import 'package:netfix/screens/screens/coming_soon/bloc/comingsoon_bloc.dart';
 import 'package:netfix/services/tmdb_service.dart';
-import 'package:netfix/views/screens/coming_soon/bloc/comingsoon_bloc.dart';
 
 class ComingSoonPage extends StatefulWidget {
   const ComingSoonPage({Key? key}) : super(key: key);
@@ -106,7 +106,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                       itemCount: datas.length,
                       itemBuilder: (context, index) {
                         String date;
-                        date = controller.datePicker(datas[index].releaseDate!);
+                        date = datePicker(datas[index].releaseDate!);
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -184,8 +184,7 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                                 vertical: 10,
                               ),
                               child: FutureBuilder<List<String>>(
-                                future: controller
-                                    .genrePicker(datas[index].genreIds!),
+                                future: genrePicker(datas[index].genreIds!),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {

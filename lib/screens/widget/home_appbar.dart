@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/views/widget/catagories.dart';
+import 'package:netfix/screens/widget/catagories.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({

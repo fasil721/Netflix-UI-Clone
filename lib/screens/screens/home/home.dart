@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
+import 'package:netfix/functions.dart';
 import 'package:netfix/models/movie_models.dart';
+import 'package:netfix/screens/screens/home/bloc/home_bloc.dart';
+import 'package:netfix/screens/widget/home_appbar.dart';
+import 'package:netfix/screens/widget/item_view.dart';
 import 'package:netfix/services/tmdb_service.dart';
-import 'package:netfix/views/screens/home/bloc/home_bloc.dart';
-import 'package:netfix/views/widget/home_appbar.dart';
-import 'package:netfix/views/widget/item_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -68,11 +69,11 @@ class _HomePageState extends State<HomePage> {
                 physics: const ScrollPhysics(),
                 children: [
                   _buildHomeMainPoster(),
-                  controller.headings("Popular On Netflix"),
+                  headings("Popular On Netflix"),
                   _buildHomeListview(code: 1),
-                  controller.headings("Trending Now"),
+                  headings("Trending Now"),
                   _buildHomeListview(code: 2),
-                  controller.headings("Top 10 Rated in India"),
+                  headings("Top 10 Rated in India"),
                   _buildstackListView(),
                 ],
               ),
@@ -204,13 +205,13 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  controller.textGenre("Adrenailine Rush"),
-                  controller.dotIcon(),
-                  controller.textGenre("Inspiring"),
-                  controller.dotIcon(),
-                  controller.textGenre("Exciting"),
-                  controller.dotIcon(),
-                  controller.textGenre("Extreme Sports"),
+                 textGenre("Adrenailine Rush"),
+                   dotIcon(),
+                   textGenre("Inspiring"),
+                   dotIcon(),
+                   textGenre("Exciting"),
+                   dotIcon(),
+                   textGenre("Extreme Sports"),
                 ],
               ),
             ),
