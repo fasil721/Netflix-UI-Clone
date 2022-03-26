@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netfix/home/home.dart';
 import 'package:netfix/services/tmdb_service.dart';
-import 'package:netfix/views/screens/coming_soon_page.dart';
+import 'package:netfix/views/screens/coming_soon/coming_soon.dart';
 import 'package:netfix/views/screens/downloads.dart';
-import 'package:netfix/views/screens/home_page.dart';
+import 'package:netfix/views/screens/home/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

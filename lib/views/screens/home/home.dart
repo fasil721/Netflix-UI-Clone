@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
-import 'package:netfix/home/bloc/home_bloc.dart';
 import 'package:netfix/models/movie_models.dart';
 import 'package:netfix/services/tmdb_service.dart';
+import 'package:netfix/views/screens/home/bloc/home_bloc.dart';
 import 'package:netfix/views/widget/home_appbar.dart';
 import 'package:netfix/views/widget/item_view.dart';
 

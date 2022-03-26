@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netfix/constants.dart';
 import 'package:netfix/models/movie_models.dart';
+import 'package:netfix/services/tmdb_service.dart';
+import 'package:netfix/views/screens/coming_soon/bloc/comingsoon_bloc.dart';
 
 class ComingSoonPage extends StatefulWidget {
   const ComingSoonPage({Key? key}) : super(key: key);
@@ -15,12 +18,6 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
   final scroll = ScrollController();
 
   final ValueNotifier<double> notifier = ValueNotifier(0);
-  Future<List<Result>?>? movies;
-  @override
-  void initState() {
-    movies = apiServices.fetchData(upcomingUrl);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,12 +94,14 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
           body: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: FutureBuilder<List<Result>?>(
-              future: movies,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.data != null) {
-                    final datas = snapshot.data!;
+            child: BlocProvider(
+              create: (context) =>
+                  ComingsoonBloc(RepositoryProvider.of<TmdbServices>(context))
+                    ..add(LoadUpcomingMoviesEvent()),
+              child: BlocBuilder<ComingsoonBloc, ComingsoonState>(
+                builder: (context, state) {
+                  if (state is UpcomingMoviesLoadedState) {
+                    final datas = state.movies;
                     return ListView.builder(
                       itemCount: datas.length,
                       itemBuilder: (context, index) {
@@ -234,9 +233,10 @@ class _ComingSoonViewState extends State<ComingSoonPage> {
                       },
                     );
                   }
-                }
-                return const SizedBox();
-              },
+
+                  return const SizedBox();
+                },
+              ),
             ),
           ),
         ),
